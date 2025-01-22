@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="43919a6d-bd22-4709-a383-d512e613b6dc" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DDAffinity/models/DDAffinity.py" beforeDir="false" afterPath="$PROJECT_DIR$/DDAffinity/models/DDAffinity.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -428,7 +427,7 @@
       <workItem from="1736684411871" duration="39996000" />
       <workItem from="1737122937936" duration="3202000" />
       <workItem from="1737165152937" duration="52132000" />
-      <workItem from="1737530899640" duration="7667000" />
+      <workItem from="1737530899640" duration="7972000" />
     </task>
     <servers />
   </component>

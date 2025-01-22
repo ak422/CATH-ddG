@@ -644,7 +644,7 @@ class DDAffinity_NET(nn.Module):
             chi_alt: (L, 4)
         """
         chi_new = torch.where(
-            torch.rand_like(chi) <= 0.4,
+            torch.rand_like(chi) <= 0.2,
             chi_alt,
             chi,
         )
