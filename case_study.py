@@ -265,7 +265,6 @@ if __name__ == '__main__':
                             'num_muts': len(mutstr.split(',')),
                             'ddG': ddg_true.item(),
                             'ddG_pred': ddg_pred.item(),
-                            # 'ddG_FoldX': ddG_FoldX.item(),
                             'fold': fold,
                         })
         results_fold = pd.DataFrame(results_fold)

@@ -58,7 +58,6 @@ def process_ddg(results):
     results['ddG_pred'] = pd.DataFrame(ddg_list)
     results = pd.DataFrame(results)
     return results
-    # results.to_csv("results_all.csv", index=False)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

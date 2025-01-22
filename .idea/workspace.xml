@@ -5,15 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="43919a6d-bd22-4709-a383-d512e613b6dc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DDAffinity/utils/skempi_mpnn.py" beforeDir="false" afterPath="$PROJECT_DIR$/DDAffinity/utils/skempi_mpnn.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configs/inference/case_study_HER2.yml" beforeDir="false" afterPath="$PROJECT_DIR$/configs/inference/case_study_HER2.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configs/inference/case_study_S285.yml" beforeDir="false" afterPath="$PROJECT_DIR$/configs/inference/case_study_S285.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configs/train/CATH.yml" beforeDir="false" afterPath="$PROJECT_DIR$/configs/train/CATH.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configs/train/Case_study.yml" beforeDir="false" afterPath="$PROJECT_DIR$/configs/train/Case_study.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configs/train/PPIformer.yml" beforeDir="false" afterPath="$PROJECT_DIR$/configs/train/PPIformer.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DDAffinity/models/DDAffinity.py" beforeDir="false" afterPath="$PROJECT_DIR$/DDAffinity/models/DDAffinity.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/case_study.py" beforeDir="false" afterPath="$PROJECT_DIR$/case_study.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/data/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test_DDAffinity.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_DDAffinity.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/train_DDAffinity.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_DDAffinity.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -435,7 +433,7 @@
       <workItem from="1736684411871" duration="39996000" />
       <workItem from="1737122937936" duration="3202000" />
       <workItem from="1737165152937" duration="52132000" />
-      <workItem from="1737530899640" duration="3643000" />
+      <workItem from="1737530899640" duration="6116000" />
     </task>
     <servers />
   </component>
@@ -529,11 +527,6 @@
           <url>file://$PROJECT_DIR$/case_study.py</url>
           <line>69</line>
           <option name="timeStamp" value="1146" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/case_study.py</url>
-          <line>159</line>
-          <option name="timeStamp" value="1147" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/DDAffinity/datasets/build_mutant_skempi.py</url>

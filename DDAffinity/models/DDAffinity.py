@@ -62,21 +62,6 @@ def gaussian(x, mean, std):
     a = (2*pi) ** 0.5
     return torch.exp(-0.5 * (((x - mean) / std) ** 2)) / (a * std)
 
-# class NonLinear(nn.Module):
-#     def __init__(self, input, output_size, hidden=None):
-#         super(NonLinear, self).__init__()
-#
-#         if hidden is None:
-#             hidden = input
-#         self.layer1 = nn.Linear(input, hidden)
-#         self.layer2 = nn.Linear(hidden, output_size)
-#
-#     def forward(self, x):
-#         x = self.layer1(x)
-#         x = F.gelu(x)
-#         x = self.layer2(x)
-#         return x
-
 class Gaussian_neighbor(nn.Module):
     def __init__(self, K=16, edge_types=5*5):
         super().__init__()
@@ -151,7 +136,6 @@ class ResiduePairEncoder(nn.Module):
         self.noise_sd = noise_sd
 
         self.embeddings = PositionalEncodings(num_positional_embeddings)
-        # node_in, edge_in = 6, num_positional_embeddings + num_rbf * 25 + 7 * 2 +16
         node_in, edge_in = 6, num_positional_embeddings + num_rbf * 45 + 7 * 2 + 16
         self.aapair = AApair(K=16, max_aa_types=22)
 
@@ -290,9 +274,6 @@ class ResiduePairEncoder(nn.Module):
             pos_atoms:  (L, A, 3)
             mask_atoms: (L, A)
         """
-        # X[:, :, 0:4] = X[:, :, 0:4] + self.noise_bb * torch.randn_like(X[:, :, 0:4])
-        # X[:, :, 4:] = X[:, :, 4:] + self.noise_sd * torch.randn_like(X[:, :, 4:])
-
         Ca = X[:, :, 1]
         b = X[:, :, 1] - X[:, :, 0]
         c = X[:, :, 2] - X[:, :, 1]
@@ -318,19 +299,6 @@ class ResiduePairEncoder(nn.Module):
         D_A_B_neighbors = gather_edges(D_A_B[:,:,:,None], E_idx)[:,:,:,0] #[B,L,K]
         RBF_A_B = self._rbf(D_A_B_neighbors)
         return RBF_A_B
-    # def _rbf_residue(self, D, num_rbf=4):
-    #     device = D.device
-    #     D_min, D_max, D_count = 2., 22., num_rbf
-    #     D_mu = torch.linspace(D_min, D_max, D_count, device=device)
-    #     D_mu = D_mu.view([1,1,-1])
-    #     D_sigma = (D_max - D_min) / D_count
-    #     D_expand = torch.unsqueeze(D, -1)
-    #     RBF = torch.exp(-((D_expand - D_mu) / D_sigma)**2)
-    #     return RBF
-    # def _get_rbf_residue(self, A, B):
-    #     D_A_B = torch.sqrt(torch.sum((A[:,:,:] - B[:,:,:])**2,-1) + 1e-6) #[B, L, L]
-    #     RBF_A_B = self._rbf_residue(D_A_B)
-    #     return RBF_A_B
 
     def forward(self, batch):
         mask_atom = batch["mask_atoms"]   # N = 0; CA = 1; C = 2; O = 3; CB = 4;
@@ -341,7 +309,6 @@ class ResiduePairEncoder(nn.Module):
         aa = batch["aa"]
 
         batch["pos_heavyatom"] = self._set_Cb_positions(batch["pos_heavyatom_ori"], mask_atom)
-        # batch["pos_heavyatom"] = self._set_Cb_positions(batch["pos_heavyatom"], mask_atom)
         X = batch["pos_heavyatom"]
         N = X[:, :, 0, :]
         Ca = X[:, :, 1, :]
@@ -385,7 +352,6 @@ class ResiduePairEncoder(nn.Module):
         RBF_all.append(self._get_rbf(C, Cb, E_idx))  # C-Cb
         RBF_all.append(self._get_rbf(O, Cb, E_idx))  # O-Cb
         RBF_all.append(self._get_rbf(C, O, E_idx))  # C-O
-        # RBF_all = torch.cat(tuple(RBF_all), dim=-1)
 
         # sidechain rbf
         mask_heavyatom = batch["mask_heavyatom"]
@@ -561,53 +527,7 @@ def init_params(module):
         normal_(module.weight.data)
         if module.padding_idx is not None:
             module.weight.data[module.padding_idx].zero_()
-    # elif isinstance(module, nn.LayerNorm):
-    #     # 初始化层归一化的权重为 1，偏置为 0
-    #     module.bias.data.zero_()
-    #     module.weight.data.fill_(1.0)
 
-# class Adapter(nn.Module):
-#     def __init__(self, input, output_size, hidden=128):
-#         super(Adapter,self).__init__()
-#         self.n_embd = input
-#         self.up_size = hidden
-#
-#         #_before
-#         # self.adapter_layer_norm_before = nn.LayerNorm(self.n_embd)
-#
-#         # if adapter_scalar == "learnable_scalar":
-#         #     self.scale = nn.Parameter(torch.ones(1))
-#         # else:
-#         #     self.scale = float(adapter_scalar)
-#
-#         self.down_proj = nn.Linear(self.n_embd, self.up_size)
-#         self.non_linear_func = nn.GELU()
-#         self.up_proj = nn.Linear(self.up_size, self.n_embd)
-#         self.output_proj = nn.Linear(self.n_embd, output_size)
-#
-#         # with torch.no_grad():
-#         #     nn.init.kaiming_uniform_(self.down_proj.weight, a=math.sqrt(5))
-#         #     nn.init.zeros_(self.up_proj.weight)
-#         #     nn.init.zeros_(self.down_proj.bias)
-#         #     nn.init.zeros_(self.up_proj.bias)
-#         #     nn.init.kaiming_uniform_(self.output_proj.weight, a=math.sqrt(5))
-#         #     nn.init.zeros_(self.output_proj.bias)
-#     def forward(self, x, add_residual=True, residual=None):
-#         residual = x
-#         # x = self.adapter_layer_norm_before(x)
-#
-#         down = self.down_proj(x)
-#         down = self.non_linear_func(down)
-#         # down = nn.functional.dropout(down, p=0.1)
-#         up = self.up_proj(down)
-#
-#         if add_residual:
-#             output = up + residual
-#         else:
-#             output = up
-#         output = self.output_proj(output)
-#
-#         return output
 
 class DDAffinity_NET(nn.Module):
     def __init__(self, cfg):
@@ -676,8 +596,8 @@ class DDAffinity_NET(nn.Module):
 
         # Pred
         self.ddg_readout = nn.Sequential(
-            nn.Linear(hidden_dim, hidden_dim), nn.GELU(),   # nn.Tanh(), nn.GELU()
-            nn.Linear(hidden_dim, hidden_dim), nn.GELU(),   # nn.Tanh(), nn.GELU()
+            nn.Linear(hidden_dim, hidden_dim), nn.GELU(),
+            nn.Linear(hidden_dim, hidden_dim), nn.GELU(),
             nn.Linear(hidden_dim, 1)
         )
 
@@ -734,13 +654,11 @@ class DDAffinity_NET(nn.Module):
         mask_residue = batch['mask']
 
         chi = self._random_flip_chi(batch['chi'], batch['chi_alt'])
-        # chi = batch['chi']
         chi_select = chi * (1 - batch['mut_flag'].float())[:, :, None]
 
         x = self.single_encoders[code_idx](
             aa=batch['aa'],
             aa_esm2=batch['aa_esm2'],
-            # X=batch["pos_atoms"],
             X=batch["pos_heavyatom"], mask_atom=batch['mask_heavyatom'],
             phi=batch['phi'], phi_mask=batch['phi_mask'],
             psi=batch['psi'], psi_mask=batch['psi_mask'],
@@ -807,14 +725,6 @@ class DDAffinity_NET(nn.Module):
 
         H_mt, H_wt = h_mt.max(dim=1)[0], h_wt.max(dim=1)[0]
 
-        # # save latent
-        # df_wt = pd.DataFrame(H_wt.cpu().detach().numpy(),
-        #                      index=np.array(batch_wt['pdbcode']))
-        # df_mt = pd.DataFrame(H_mt.cpu().detach().numpy(),
-        #                      index=np.array(batch_mt['pdbcode']))
-        # df_wt.to_csv('df_wt_hidden.csv', mode='a', index=True, header=None)
-        # df_mt.to_csv('df_mt_hidden.csv', mode='a', index=True, header=None)
-
         ddg_pred_foldx = self.foldx_ddg(batch_mt['inter_energy'] - batch_wt['inter_energy'])
         ddg_pred_foldx_inv = self.foldx_ddg(batch_wt['inter_energy'] - batch_mt['inter_energy'])
         loss_foldx = (F.mse_loss(ddg_pred_foldx, batch['ddG']) + F.mse_loss(ddg_pred_foldx_inv, -batch['ddG']))/2
@@ -824,8 +734,6 @@ class DDAffinity_NET(nn.Module):
         loss_single = (F.mse_loss(ddg_pred * is_single, batch['ddG'] * is_single, reduction="sum") + F.mse_loss(ddg_pred_inv * is_single, -batch['ddG'] * is_single, reduction="sum")) / (2 * num_is_single)
         loss_multi = (F.mse_loss(ddg_pred * (1 - is_single), batch['ddG'] * (1 - is_single), reduction="sum") + F.mse_loss(ddg_pred_inv * (1 - is_single), -batch['ddG'] * (1 - is_single), reduction="sum")) / (2 * num_is_multi)
         loss_mse = 0.6 * loss_single + 0.4 * loss_multi
-
-        # loss_mse = (F.mse_loss(ddg_pred, batch['ddG']) + F.mse_loss(ddg_pred_inv, -batch['ddG'])) / 2
 
         # cath domain classifier
         logits_wt = self.cath_classifier(H_wt) # {0:0,1:1,2:2,3:3,4:4,6:5}

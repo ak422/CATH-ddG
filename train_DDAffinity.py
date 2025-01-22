@@ -113,15 +113,8 @@ if __name__ == '__main__':
             optimizer.step()
             optimizer.zero_grad()
 
-            # for i, p in enumerate(optimizer.param_groups):
-            #     print(f"{i} {p['lr']}")
-
-            # # Trigger scheduler
-            # print("before scheduler step =>", scheduler.get_lr())
             if config.train.optimizer.type == 'adam':
                 scheduler.step()
-            # print("after scheduler step =>", scheduler.get_lr())
-            # print(f'[epoch {epoch} fold {fold}] the step of optimizer:', optimizer._step)
 
         time_backward_end = current_milli_time()
         logger.info(f'[epoch {epoch}/{config.train.max_epochs} fold {fold+1}/{config.train.num_cvfolds}] mean loss {mean_loss.item():.4f}')

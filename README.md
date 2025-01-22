@@ -16,7 +16,7 @@ Overview of our **CATH-ddG** architecture is shown below.
 
 ## Install
 
-#### DDAffinity Environment
+#### CATH-ddG Environment
 
 ```bash
 conda env create -f env.yml
