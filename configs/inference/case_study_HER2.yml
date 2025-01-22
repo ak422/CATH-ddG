@@ -1,6 +1,6 @@
 # python case_study.py ./configs/inference/case_study_HER2.yml --device cuda:0
 checkpoints:
-  - ./trained_models/12_25_23_16_02_DDAffinity.pt
+  - ./trained_models/case_study.pt
 early_stoppingdir: ./early_stopping
 
 data:

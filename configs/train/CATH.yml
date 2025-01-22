@@ -1,9 +1,9 @@
-# training: python train_DDAffinity.py ./configs/train/CATH.yml --tag CATH --device cuda:1
-# test: python test_DDAffinity.py ./configs/train/CATH.yml --batch_size 16  --device cuda:2
+# training: python train_DDAffinity.py ./configs/train/CATH.yml --tag CATH --device cuda:0
+# test: python test_DDAffinity.py ./configs/train/CATH.yml  --device cuda:0
 checkpoints:
-  - ./trained_models/12_25_03_47_23_DDAffinity.pt
-  - ./trained_models/12_20_22_05_17_DDAffinity.pt
-  - ./trained_models/12_25_07_18_41_DDAffinity.pt
+  - ./trained_models/CATH_model_0.pt
+  - ./trained_models/CATH_model_1.pt
+  - ./trained_models/CATH_model_2.pt
 early_stoppingdir: ./early_stopping
 model:
   encoder:

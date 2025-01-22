@@ -191,15 +191,15 @@ def overall_rmse_mae(df):
     pred_corrected = reg.predict(pred)
     rmse = np.sqrt( ((true - pred_corrected) ** 2).mean() )
     mae = np.abs(true - pred_corrected).mean()
-    # pred_neg = df['ddG_pred'] < 0
-    # real_neg = df['ddG'] < 0
-    # precision = precision_score(real_neg, pred_neg, zero_division=0),
-    # recall = recall_score(real_neg, pred_neg, zero_division=0),
+    pred_neg = df['ddG_pred'] < 0
+    real_neg = df['ddG'] < 0
+    precision = precision_score(real_neg, pred_neg, zero_division=0),
+    recall = recall_score(real_neg, pred_neg, zero_division=0),
     return {
         'rmse': rmse,
         'mae': mae,
-        # 'precision': precision[0],
-        # 'recall': recall[0],
+        'precision': precision[0],
+        'recall': recall[0],
     }
 
 def analyze_all_results(df):

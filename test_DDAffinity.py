@@ -68,7 +68,7 @@ if __name__ == '__main__':
     parser.add_argument('--output_perprotein', type=str, default='perprotein_metrics.csv')
     parser.add_argument('--device', type=str, default='cuda')
     parser.add_argument('--early_stoppingdir', type=str, default='./early_stopping')
-    parser.add_argument('--batch_size', type=int, default=32)
+    parser.add_argument('--batch_size', type=int, default=16)
     parser.add_argument('--num_cvfolds', type=int, default=1)
     parser.add_argument('--num_workers', type=int, default=4)
     parser.add_argument('--seed', type=int, default=2024)

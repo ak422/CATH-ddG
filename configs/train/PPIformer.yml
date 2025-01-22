@@ -1,7 +1,7 @@
-# training: python train_DDAffinity.py ./configs/train/PPIformer.yml --tag PPIFORMER --device cuda:1
-# test: python test_DDAffinity.py ./configs/train/PPIformer.yml --batch_size 16  --device cuda:0
+# training: python train_DDAffinity.py ./configs/train/PPIformer.yml --tag PPIFORMER --device cuda:0
+# test: python test_DDAffinity.py ./configs/train/PPIformer.yml  --device cuda:0
 checkpoints:
-  - ./trained_models/12_25_09_55_00_DDAffinity.pt
+  - ./trained_models/PPIFORMER.pt
 early_stoppingdir: ./early_stopping
 model:
   encoder:
