@@ -39,9 +39,9 @@ python skempi_parallel.py --reset --subset S285
 
 ***
 
-1. The  trained weights for held-out CATH test set is located in: [CATH](https://drive.google.com/file/d/1tXCWe9M-vhporNHK04Lz-Gv479_nyoNL/view?usp=drive_link)
-2. The  trained weights for held-out PPIFORMER test set is located in: [PPIFORMER](https://drive.google.com/file/d/1tXCWe9M-vhporNHK04Lz-Gv479_nyoNL/view?usp=drive_link)
-3. The  trained weights for case study is located in: [case study](https://drive.google.com/file/d/1tXCWe9M-vhporNHK04Lz-Gv479_nyoNL/view?usp=drive_link)
+1. The  trained weights for held-out CATH test set is located in: [CATH_model_0](https://drive.google.com/file/d/1Hs2h_9VBNzFSZ37vDObZ8pu47gI-cwgq/view?usp=sharing), [CATH_model_1](https://drive.google.com/file/d/10HEIJM_NU5Cz-vEcqxYNCbYFdvbzZdv7/view?usp=sharing), [CATH_model_2](https://drive.google.com/file/d/13tAPMEnSLB9uvIWJpWv4JZoSoZvs3xZ_/view?usp=sharing)
+2. The  trained weights for held-out PPIFORMER test set is located in: [PPIFORMER](https://drive.google.com/file/d/12XqQ3ucelemtaUB9MSARaKd7g49NZmi1/view?usp=sharing)
+3. The  trained weights for case study is located in: [case study](https://drive.google.com/file/d/1oOJjA7Lp7xXQqN1ChNScXQ3YS7wfnmvd/view?usp=sharing)
 
 ### Usage
 
