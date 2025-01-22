@@ -1,4 +1,4 @@
-### DDAffinity-network
+### CATH-ddG network
 
 ---
 
