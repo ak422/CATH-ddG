@@ -1,0 +1,56 @@
+# python case_study.py ./configs/inference/case_study_HER2.yml --device cuda:0
+checkpoints:
+  - ./trained_models/12_25_23_16_02_DDAffinity.pt
+early_stoppingdir: ./early_stopping
+
+data:
+  pdb_wt_dir: ./data/SKEMPI2/HER2_cache/wildtype
+  pdb_mt_dir: ./data/SKEMPI2/HER2_cache/optimized
+  cache_dir: ./data/SKEMPI2/HER2_cache/entries_cache
+  transform:
+    - type: select_atom
+      resolution: backbone+CB
+    - type: add_atom_noise
+      noise_backbone: 0.0
+      noise_sidechain: 0.0
+    - type: selected_region_fixed_size_patch
+      select_attr: mut_flag
+  batch_size: 16
+  patch_size: 256
+
+  mutations:
+    # H-CDR1
+    - GH26*
+    - YH27*
+    - TH28*
+    - FH29*
+    - TH30*
+    - TH31*
+    - YH32*
+    # H-CDR2
+    - NH52*
+    - AH53*
+    - GH54*
+    - NH55*
+    - GH56*
+    - NH57*
+    # H-CDR3
+    - GH99*
+    - GH100*
+    - GH101*
+    - RH102*
+    - RH103*
+    - LH104*
+    - QH105*
+    - FH106*
+    - DH107*
+    - YH108*
+    - FH109*
+    - DH110*
+    - YH111*
+  interest:
+    - TH31W
+    - AH53F
+    - NH57L
+    - RH103M
+    - LH104F

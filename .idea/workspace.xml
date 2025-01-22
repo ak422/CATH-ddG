@@ -1,0 +1,605 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="43919a6d-bd22-4709-a383-d512e613b6dc" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/DDAffinity/datasets/build_mutant_case.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DDAffinity/datasets/PDB_generate.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DDAffinity/datasets/skempi_parallel.py" beforeDir="false" afterPath="$PROJECT_DIR$/DDAffinity/datasets/skempi_parallel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DDAffinity/models/DDAffinity.py" beforeDir="false" afterPath="$PROJECT_DIR$/DDAffinity/models/DDAffinity.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DDAffinity/models/protein_mpnn_network_2_backup.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DDAffinity/utils/early_stopping.py" beforeDir="false" afterPath="$PROJECT_DIR$/DDAffinity/utils/early_stopping.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DDAffinity/utils/protein/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/DDAffinity/utils/protein/constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DDAffinity/utils/protein/parsers.py" beforeDir="false" afterPath="$PROJECT_DIR$/DDAffinity/utils/protein/parsers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DDAffinity/utils/skempi_mpnn.py" beforeDir="false" afterPath="$PROJECT_DIR$/DDAffinity/utils/skempi_mpnn.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DDAffinity/utils/train_mpnn.py" beforeDir="false" afterPath="$PROJECT_DIR$/DDAffinity/utils/train_mpnn.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/case_study.py" beforeDir="false" afterPath="$PROJECT_DIR$/case_study.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/inference/case_study_HER2.yml" beforeDir="false" afterPath="$PROJECT_DIR$/configs/inference/case_study_HER2.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/inference/case_study_S285.yml" beforeDir="false" afterPath="$PROJECT_DIR$/configs/inference/case_study_S285.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/train/CATH.yml" beforeDir="false" afterPath="$PROJECT_DIR$/configs/train/CATH.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/train/Case_study.yml" beforeDir="false" afterPath="$PROJECT_DIR$/configs/train/Case_study.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/train/PPIformer.yml" beforeDir="false" afterPath="$PROJECT_DIR$/configs/train/PPIformer.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/env.yml" beforeDir="false" afterPath="$PROJECT_DIR$/env.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_DDAffinity.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_DDAffinity.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/train_DDAffinity.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_DDAffinity.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="FlaskConsoleOptions" custom-start-script="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))">
+    <envs>
+      <env key="FLASK_APP" value="app" />
+    </envs>
+    <option name="myCustomStartScript" value="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))" />
+    <option name="myEnvs">
+      <map>
+        <entry key="FLASK_APP" value="app" />
+      </map>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectId" id="2Wl2dztx6KxFkhjbrdLtX9ouDkG" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowPanel.toolwindow.highlight.mappings&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowPanel.toolwindow.highlight.symlinks&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowPanel.toolwindow.show.date&quot;: &quot;false&quot;,
+    &quot;WebServerToolWindowPanel.toolwindow.show.permissions&quot;: &quot;false&quot;,
+    &quot;WebServerToolWindowPanel.toolwindow.show.size&quot;: &quot;false&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/00THESIS/Github/CATH-ddG/configs/inference&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="PyDebuggerOptionsProvider">
+    <option name="mySupportGeventDebugging" value="true" />
+    <option name="mySupportQtDebugging" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\00THESIS\Github\CATH-ddG\configs\inference" />
+      <recent name="E:\00THESIS\Github\CATH-ddG" />
+      <recent name="E:\00THESIS\Github\CATH-ddG\DDAffinity\datasets" />
+      <recent name="E:\00THESIS\Github\DDAffinity\configs\train" />
+      <recent name="E:\00THESIS\Github\DDAffinity\configs\inference" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.skempi_parallel">
+    <configuration name="build_mutant_case" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="DDAffinity" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/DDAffinity/datasets" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/DDAffinity/datasets/build_mutant_case.py" />
+      <option name="PARAMETERS" value="--subset HER2" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="build_mutant_skempi" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="DDAffinity" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/DDAffinity/datasets" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/DDAffinity/datasets/build_mutant_skempi.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="case_study" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="DDAffinity" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/case_study.py" />
+      <option name="PARAMETERS" value="./configs/inference/zero_shot.yml  --device cuda:3" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="skempi_ESM2" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="DDAffinity" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/rde/datasets" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/rde/datasets/skempi_ESM2.py" />
+      <option name="PARAMETERS" value="--reset" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="skempi_parallel" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="DDAffinity" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/DDAffinity/datasets" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/DDAffinity/datasets/skempi_parallel.py" />
+      <option name="PARAMETERS" value="--subset skempi_v2 --reset" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="train_DDAffinity" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="DDAffinity" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/train_DDAffinity.py" />
+      <option name="PARAMETERS" value="./configs/train/CATH.yml --tag skempi2 --device cuda:3" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="train_mpnn" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="DDAffinity" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/rde/utils" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/rde/utils/train_mpnn.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="zero_shot" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="DDAffinity" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/zero_shot.py" />
+      <option name="PARAMETERS" value="./configs/inference/zero_shot.yml  --device cuda:3" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.train_DDAffinity" />
+      <item itemvalue="Python.train_mpnn" />
+      <item itemvalue="Python.skempi_ESM2" />
+      <item itemvalue="Python.zero_shot" />
+      <item itemvalue="Python.build_mutant_case" />
+      <item itemvalue="Python.build_mutant_skempi" />
+      <item itemvalue="Python.skempi_parallel" />
+      <item itemvalue="Python.case_study" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.skempi_parallel" />
+        <item itemvalue="Python.build_mutant_skempi" />
+        <item itemvalue="Python.build_mutant_case" />
+        <item itemvalue="Python.zero_shot" />
+        <item itemvalue="Python.case_study" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="43919a6d-bd22-4709-a383-d512e613b6dc" name="Changes" comment="" />
+      <created>1697292939571</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1697292939571</updated>
+      <workItem from="1697292940658" duration="6314000" />
+      <workItem from="1697544886879" duration="8036000" />
+      <workItem from="1697804656050" duration="8795000" />
+      <workItem from="1697853914096" duration="31304000" />
+      <workItem from="1698299957254" duration="58537000" />
+      <workItem from="1699269895678" duration="2487000" />
+      <workItem from="1699357750130" duration="17068000" />
+      <workItem from="1699881535456" duration="20825000" />
+      <workItem from="1700234738529" duration="56369000" />
+      <workItem from="1701614026634" duration="9940000" />
+      <workItem from="1702085371511" duration="9361000" />
+      <workItem from="1702431345632" duration="8666000" />
+      <workItem from="1702612469282" duration="13826000" />
+      <workItem from="1703212965110" duration="8474000" />
+      <workItem from="1703473522223" duration="1615000" />
+      <workItem from="1703597234527" duration="11115000" />
+      <workItem from="1705578361519" duration="8025000" />
+      <workItem from="1705662358996" duration="6568000" />
+      <workItem from="1705669825647" duration="121000" />
+      <workItem from="1705669984648" duration="15165000" />
+      <workItem from="1705735451224" duration="12781000" />
+      <workItem from="1706149423681" duration="10348000" />
+      <workItem from="1706251812805" duration="4451000" />
+      <workItem from="1706257446151" duration="3194000" />
+      <workItem from="1706313907074" duration="3299000" />
+      <workItem from="1706319606964" duration="366000" />
+      <workItem from="1706616856473" duration="1237000" />
+      <workItem from="1709362460727" duration="5965000" />
+      <workItem from="1709370673782" duration="3364000" />
+      <workItem from="1709886699480" duration="53000" />
+      <workItem from="1709886760145" duration="38437000" />
+      <workItem from="1710062178481" duration="1992000" />
+      <workItem from="1710081373348" duration="43881000" />
+      <workItem from="1710544242394" duration="51751000" />
+      <workItem from="1710839175202" duration="9982000" />
+      <workItem from="1710878959315" duration="7701000" />
+      <workItem from="1711116042558" duration="1738000" />
+      <workItem from="1711161691954" duration="991000" />
+      <workItem from="1711166913331" duration="17185000" />
+      <workItem from="1711768465934" duration="21921000" />
+      <workItem from="1711981857155" duration="9542000" />
+      <workItem from="1712752104771" duration="993000" />
+      <workItem from="1712834826976" duration="9358000" />
+      <workItem from="1712971629347" duration="82169000" />
+      <workItem from="1714568298444" duration="1496000" />
+      <workItem from="1715262248028" duration="13154000" />
+      <workItem from="1715735111764" duration="14025000" />
+      <workItem from="1715846475253" duration="9415000" />
+      <workItem from="1716122774176" duration="7968000" />
+      <workItem from="1716449346390" duration="30970000" />
+      <workItem from="1716995285797" duration="1589000" />
+      <workItem from="1717039926218" duration="22440000" />
+      <workItem from="1717459661002" duration="8358000" />
+      <workItem from="1717613481199" duration="52977000" />
+      <workItem from="1718261699099" duration="28276000" />
+      <workItem from="1718372938733" duration="6462000" />
+      <workItem from="1718609118212" duration="127000" />
+      <workItem from="1718609486847" duration="89108000" />
+      <workItem from="1718955293825" duration="56469000" />
+      <workItem from="1719279237083" duration="23806000" />
+      <workItem from="1719391638756" duration="9775000" />
+      <workItem from="1719411609372" duration="30661000" />
+      <workItem from="1719500384688" duration="106547000" />
+      <workItem from="1719929711186" duration="3032000" />
+      <workItem from="1719966928259" duration="59140000" />
+      <workItem from="1720163256044" duration="94553000" />
+      <workItem from="1720579079325" duration="86944000" />
+      <workItem from="1720959292397" duration="67941000" />
+      <workItem from="1721439920308" duration="16311000" />
+      <workItem from="1721524325959" duration="34960000" />
+      <workItem from="1722119556166" duration="82838000" />
+      <workItem from="1723600596825" duration="174000" />
+      <workItem from="1723600793423" duration="17267000" />
+      <workItem from="1724030502676" duration="60397000" />
+      <workItem from="1724240464921" duration="57171000" />
+      <workItem from="1724494775802" duration="772000" />
+      <workItem from="1724547003080" duration="2033000" />
+      <workItem from="1724567323558" duration="110652000" />
+      <workItem from="1724982475747" duration="16203000" />
+      <workItem from="1725079806649" duration="44942000" />
+      <workItem from="1725363964698" duration="32815000" />
+      <workItem from="1725586005772" duration="801000" />
+      <workItem from="1725587811308" duration="787000" />
+      <workItem from="1725589254760" duration="4481000" />
+      <workItem from="1725608375581" duration="78127000" />
+      <workItem from="1726058799167" duration="140179000" />
+      <workItem from="1726586559870" duration="17979000" />
+      <workItem from="1726646022471" duration="898000" />
+      <workItem from="1726647881943" duration="117247000" />
+      <workItem from="1727266887511" duration="17235000" />
+      <workItem from="1727336874344" duration="20016000" />
+      <workItem from="1727789584816" duration="55000" />
+      <workItem from="1727789649903" duration="677000" />
+      <workItem from="1727791351151" duration="9516000" />
+      <workItem from="1727964156448" duration="33545000" />
+      <workItem from="1728786982451" duration="9679000" />
+      <workItem from="1728897329669" duration="10477000" />
+      <workItem from="1729124590319" duration="42737000" />
+      <workItem from="1729412854308" duration="22494000" />
+      <workItem from="1729479535137" duration="20243000" />
+      <workItem from="1729562858138" duration="36756000" />
+      <workItem from="1729754434988" duration="8220000" />
+      <workItem from="1729819740884" duration="5834000" />
+      <workItem from="1729839811640" duration="4216000" />
+      <workItem from="1729866306949" duration="7802000" />
+      <workItem from="1729925367462" duration="40601000" />
+      <workItem from="1730159933150" duration="9647000" />
+      <workItem from="1730247606417" duration="115911000" />
+      <workItem from="1730902316636" duration="6383000" />
+      <workItem from="1731026870094" duration="55407000" />
+      <workItem from="1731405198992" duration="5216000" />
+      <workItem from="1731457452919" duration="49971000" />
+      <workItem from="1731717965838" duration="26827000" />
+      <workItem from="1731833392543" duration="105894000" />
+      <workItem from="1732239720927" duration="5894000" />
+      <workItem from="1732277702481" duration="5904000" />
+      <workItem from="1732314078111" duration="27112000" />
+      <workItem from="1732840282779" duration="12156000" />
+      <workItem from="1732884438149" duration="53917000" />
+      <workItem from="1733215772449" duration="69192000" />
+      <workItem from="1733638828354" duration="89022000" />
+      <workItem from="1734150655906" duration="25067000" />
+      <workItem from="1734276795877" duration="122489000" />
+      <workItem from="1735291989142" duration="834000" />
+      <workItem from="1735376661886" duration="609000" />
+      <workItem from="1735386324617" duration="832000" />
+      <workItem from="1735441054157" duration="463000" />
+      <workItem from="1735454311645" duration="61000" />
+      <workItem from="1735455550417" duration="3703000" />
+      <workItem from="1735523025360" duration="18192000" />
+      <workItem from="1735776437441" duration="10218000" />
+      <workItem from="1735895058309" duration="544000" />
+      <workItem from="1735967095628" duration="5051000" />
+      <workItem from="1736652557532" duration="1219000" />
+      <workItem from="1736684411871" duration="39996000" />
+      <workItem from="1737122937936" duration="3202000" />
+      <workItem from="1737165152937" duration="52132000" />
+      <workItem from="1737530899640" duration="267000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ID_ORDER">
+      <list>
+        <option value="Default.Root" />
+        <option value="Default.Author" />
+        <option value="Default.Date" />
+        <option value="Default.Subject" />
+        <option value="Space.CommitStatus" />
+      </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/DDAffinity/models/rotary_embedding.py</url>
+          <line>54</line>
+          <option name="timeStamp" value="122" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/DDAffinity/models/rotary_embedding.py</url>
+          <line>16</line>
+          <option name="timeStamp" value="123" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/DDAffinity/utils/protein/parsers.py</url>
+          <line>177</line>
+          <option name="timeStamp" value="296" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/DDAffinity/utils/protein/parsers.py</url>
+          <line>142</line>
+          <option name="timeStamp" value="384" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/DDAffinity/modules/common/geometry.py</url>
+          <line>237</line>
+          <option name="timeStamp" value="433" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/DDAffinity/utils/transforms/noise.py</url>
+          <line>224</line>
+          <option name="timeStamp" value="693" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/DDAffinity/utils/train_mpnn.py</url>
+          <line>356</line>
+          <option name="timeStamp" value="966" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/DDAffinity/utils/skempi_mpnn.py</url>
+          <line>110</line>
+          <option name="timeStamp" value="1106" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/DDAffinity/datasets/skempi_parallel.py</url>
+          <line>662</line>
+          <option name="timeStamp" value="1136" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/DDAffinity/datasets/build_mutant_case.py</url>
+          <line>323</line>
+          <option name="timeStamp" value="1137" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/DDAffinity/datasets/build_mutant_skempi.py</url>
+          <line>374</line>
+          <option name="timeStamp" value="1145" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/case_study.py</url>
+          <line>69</line>
+          <option name="timeStamp" value="1146" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/case_study.py</url>
+          <line>159</line>
+          <option name="timeStamp" value="1147" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/DDAffinity/datasets/build_mutant_skempi.py</url>
+          <line>353</line>
+          <option name="timeStamp" value="1150" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/DDAffinity/datasets/skempi_parallel.py</url>
+          <line>241</line>
+          <option name="timeStamp" value="1152" />
+        </line-breakpoint>
+      </breakpoints>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="PythonConfigurationType">
+        <watch expression="PDB_List" />
+        <watch expression="processed_df" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/DDAffinity$PBD_generate__1_.coverage" NAME="PBD_generate (1) Coverage Results" MODIFIED="1709893617481" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/rde/datasets" />
+    <SUITE FILE_PATH="coverage/DDAffinity$test_DDAffinity__1_.coverage" NAME="test_DDAffinity Coverage Results" MODIFIED="1705719882859" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/DDAffinity$skempi_mpnn.coverage" NAME="skempi_mpnn Coverage Results" MODIFIED="1710766787222" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/rde/utils" />
+    <SUITE FILE_PATH="coverage/CATH_ddG$build_mutant_skempi.coverage" NAME="build_mutant_skempi Coverage Results" MODIFIED="1737358415281" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DDAffinity/datasets" />
+    <SUITE FILE_PATH="coverage/DDAffinity$FoldX.coverage" NAME="FoldX Coverage Results" MODIFIED="1706257506186" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/rde/datasets" />
+    <SUITE FILE_PATH="coverage/DDAffinity$skempi_ESM2.coverage" NAME="skempi_ESM2 Coverage Results" MODIFIED="1718332168256" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/rde/datasets" />
+    <SUITE FILE_PATH="coverage/protein_mpnn_network_py$test_mpnn_network_skempi.coverage" NAME="test_mpnn_network_skempi Coverage Results" MODIFIED="1700056728123" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/DDAffinity$DDAffinity_network.coverage" NAME="DDAffinity_network Coverage Results" MODIFIED="1705718306060" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/rde/models" />
+    <SUITE FILE_PATH="coverage/protein_mpnn_network_py$train_DDAffinity.coverage" NAME="train_DDAffinity Coverage Results" MODIFIED="1705720899215" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/DDAffinity$rotary_embedding.coverage" NAME="rotary_embedding Coverage Results" MODIFIED="1717462033550" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/rde/models" />
+    <SUITE FILE_PATH="coverage/CATH_ddG$case_study.coverage" NAME="case_study Coverage Results" MODIFIED="1737211213902" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/DDAffinity$skempi_parallel__1_.coverage" NAME="skempi_parallel (1) Coverage Results" MODIFIED="1724937361149" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DDAffinity/datasets" />
+    <SUITE FILE_PATH="coverage/DDAffinity$noise.coverage" NAME="noise Coverage Results" MODIFIED="1726126259079" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DDAffinity/utils/transforms" />
+    <SUITE FILE_PATH="coverage/CATH_ddG$process_419.coverage" NAME="build_mutant_case Coverage Results" MODIFIED="1737358330041" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DDAffinity/datasets" />
+    <SUITE FILE_PATH="coverage/CATH_ddG$train_DDAffinity.coverage" NAME="train_DDAffinity Coverage Results" MODIFIED="1737124450199" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/DDAffinity$DDAffinity.coverage" NAME="DDAffinity Coverage Results" MODIFIED="1731316036728" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DDAffinity/models" />
+    <SUITE FILE_PATH="coverage/CATH_ddG$zero_shot.coverage" NAME="zero_shot Coverage Results" MODIFIED="1737299074745" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/DDAffinity$single.coverage" NAME="single Coverage Results" MODIFIED="1727267170010" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DDAffinity/modules/encoders" />
+    <SUITE FILE_PATH="coverage/DDAffinity$skempi_parallel.coverage" NAME="skempi_parallel Coverage Results" MODIFIED="1732886134939" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DDAffinity/datasets" />
+    <SUITE FILE_PATH="coverage/protein_mpnn_network_py$pointmut_analysis.coverage" NAME="pointmut_analysis Coverage Results" MODIFIED="1701497873327" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/DDAffinity$train_mpnn.coverage" NAME="train_mpnn Coverage Results" MODIFIED="1718885351488" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/rde/utils" />
+    <SUITE FILE_PATH="coverage/DDAffinity$test_DDAffinity.coverage" NAME="test_DDAffinity Coverage Results" MODIFIED="1735809480584" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/protein_mpnn_network_py$train_mpnn_network_skempi.coverage" NAME="train_mpnn_network_skempi Coverage Results" MODIFIED="1705667652668" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/DDAffinity$test_only.coverage" NAME="test_only Coverage Results" MODIFIED="1731206836143" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/DDAffinity$case_study.coverage" NAME="case_study Coverage Results" MODIFIED="1735810423283" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/DDAffinity$train_DDAffinity.coverage" NAME="train_DDAffinity Coverage Results" MODIFIED="1734678679117" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/DDAffinity$PBD_generate.coverage" NAME="PBD_generate Coverage Results" MODIFIED="1710117971737" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/rde/datasets" />
+    <SUITE FILE_PATH="coverage/DDAffinity$case_study_anti.coverage" NAME="case_study_anti Coverage Results" MODIFIED="1710116539092" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/CATH_ddG$skempi_parallel.coverage" NAME="skempi_parallel Coverage Results" MODIFIED="1737358651914" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DDAffinity/datasets" />
+  </component>
+</project>
