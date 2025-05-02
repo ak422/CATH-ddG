@@ -197,6 +197,8 @@ def split_cath_domains(prior_dir, df, csv_path):
     edge_path = os.path.join(prior_dir, 'edge.csv')
 
     nodes_df = pd.read_csv(node_path)
+    nodes_df.sort_values(by="cath_domains", inplace=True, ascending=False)
+
     edges_df = pd.read_csv(edge_path).iloc[:, 1:].drop_duplicates()
 
     G = nx.Graph()
