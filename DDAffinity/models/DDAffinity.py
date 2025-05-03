@@ -636,7 +636,7 @@ class DDAffinity_NET(nn.Module):
 
         return centrality_norm[:, :, None]
 
-    def _random_flip_chi(self, chi, chi_alt):
+    def _random_flip_chi(self, chi, chi_alt, prob=0.2):
         """
         Args:
             chi: (L, 4)
@@ -644,7 +644,7 @@ class DDAffinity_NET(nn.Module):
             chi_alt: (L, 4)
         """
         chi_new = torch.where(
-            torch.rand_like(chi) <= 0.2,
+            torch.rand_like(chi) <= prob,
             chi_alt,
             chi,
         )
@@ -654,7 +654,8 @@ class DDAffinity_NET(nn.Module):
         mask_residue = batch['mask']
 
         chi = self._random_flip_chi(batch['chi'], batch['chi_alt'])
-        chi_select = chi * (1 - batch['mut_flag'].float())[:, :, None]
+        chi_select = torch.cat([(chi * (1 - batch['mut_flag'].float())[:, :, None])[:,:,1:],
+                                (chi * batch['mut_flag'].float()[:, :, None])[:,:,:1]], dim=-1)
 
         x = self.single_encoders[code_idx](
             aa=batch['aa'],
