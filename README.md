@@ -87,9 +87,3 @@ python train_DDAffinity.py ./configs/train/CATH.yml --device cuda:0
 ***
 
 We acknowledge that parts of our code is adapted from [Rotamer Density Estimator (RDE)](https://github.com/luost26/RDE-PPI). Thanks to the authors for sharing their codes. 
-
-### Contact
-
----
-
-Please check out our latest work on mutational effect prediction for protein-protein interactions at [github](https://github.com/ak422/CATH-ddG)
