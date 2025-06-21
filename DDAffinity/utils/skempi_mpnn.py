@@ -130,11 +130,14 @@ def perprotein_correlations(df, return_details=False, complex_threshold=8):
 def percomplex_correlations(df, return_details=False):
     corr_table = []
     for cplx in np.sort(df['complex_PPI'].unique()):
+    # for cplx in np.sort(df['protein_group'].unique()):
         df_cplx = df.query(f'complex_PPI == "{cplx}"')
+        # df_cplx = df.query(f'protein_group == "{cplx}"')
         if len(df_cplx) < 10:
             continue
         corr_table.append({
             'complex_PPI': cplx,
+            # 'protein_group': cplx,
             'pearson': df_cplx[['ddG', 'ddG_pred']].corr('pearson').iloc[0,1],
             'spearman': df_cplx[['ddG', 'ddG_pred']].corr('spearman').iloc[0,1],
         })
@@ -143,6 +146,8 @@ def percomplex_correlations(df, return_details=False):
     out = {
         'percomplex_pearson': average['pearson'],
         'percomplex_spearman': average['spearman'],
+        # 'perprotein_pearson': average['pearson'],
+        # 'perprotein_spearman': average['spearman'],
     }
     if return_details:
         return out, corr_table

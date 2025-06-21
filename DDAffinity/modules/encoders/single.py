@@ -31,9 +31,9 @@ class AAEmbedding(nn.Module):
             ]))
 
         self.mlp = nn.Sequential(
-            nn.Linear(infeat_dim, feat_dim * 2), nn.GELU(),
-            nn.Linear(feat_dim * 2, feat_dim), nn.GELU(),
-            nn.Linear(feat_dim, feat_dim), nn.GELU(),
+            nn.Linear(infeat_dim, feat_dim * 2), nn.SELU(),
+            nn.Linear(feat_dim * 2, feat_dim), nn.SELU(),
+            nn.Linear(feat_dim, feat_dim), nn.SELU(),
             nn.Linear(feat_dim, feat_dim)
         )
 
@@ -54,7 +54,7 @@ class AAEmbedding(nn.Module):
     def transform(self, aa_vecs):
         return torch.cat([
             self.to_rbf_(aa_vecs[:, :, 0], -4.5, 4.5, 0.1),
-            self.to_rbf_(aa_vecs[:, :, 1], 0, 2.2, 0.1),
+            # self.to_rbf_(aa_vecs[:, :, 1], 0, 2.2, 0.1),
             self.to_rbf_(aa_vecs[:, :, 2], -1.0, 1.0, 0.25),
             torch.sigmoid(aa_vecs[:, :, 3:] * 6 - 3),
         ], dim=-1)
@@ -78,88 +78,6 @@ class AAEmbedding(nn.Module):
         ], dim=-1)
         return rbf_vecs
 
-# def gaussian(x, mean, std):
-#     pi = 3.1415926
-#     a = (2 * pi) ** 0.5
-#     return torch.exp(-0.5 * (((x - mean) / std) ** 2)) / (a * std)
-# class Gaussian_node(nn.Module):
-#     def __init__(self, K=16, edge_types=5*5):
-#         super().__init__()
-#         self.K = K
-#         self.means = nn.Embedding(1, K)  # 维度 = K
-#         self.stds = nn.Embedding(1, K)
-#         self.mul = nn.Embedding(edge_types, 1)        # 维度 = 1
-#         self.bias = nn.Embedding(edge_types, 1)       # padding_idx: 标记输入中的填充值
-#     def gather_nodes(self, nodes, neighbor_idx):
-#         # Features [B,N,C] at Neighbor indices [B,N,K] => [B,N,K,C]
-#         # Flatten and expand indices per batch [B,N,K] => [B,NK] => [B,NK,C]
-#         neighbors_flat = neighbor_idx.view((neighbor_idx.shape[0], -1))
-#         neighbors_flat = neighbors_flat.unsqueeze(-1).expand(-1, -1, nodes.size(2))
-#         # Gather and re-pack
-#         neighbor_features = torch.gather(nodes, 1, neighbors_flat)
-#         neighbor_features = neighbor_features.view(list(neighbor_idx.shape)[:3] + [-1])
-#         return neighbor_features
-#     def forward(self, X, mask_atoms=None):
-#         n_complex, n_residue, n_atom, _ = X.shape
-#         delta_pos = (X.unsqueeze(-2) - X.unsqueeze(-3)).norm(dim=-1)  #　邻居节点到Ｘ所有原子的距离
-#
-#         D_A_B_neighbors = delta_pos.to(X.device)
-#         edge_types = torch.arange(0, n_atom*n_atom).view(n_atom, n_atom).to(X.device)
-#         mul = self.mul(edge_types).squeeze(-1)   # 边类型嵌入，然后对边求和， gamma
-#         bias = self.bias(edge_types).squeeze(-1)    # 边类型嵌入，然后对边求和, beta
-#
-#         D_A_B_neighbors = D_A_B_neighbors.flatten(start_dim=-2).index_select(2,torch.LongTensor([1,2,3,4,7,8,9,13,14,19]).to(X.device))
-#         mul = mul.flatten(start_dim=-2).index_select(0,torch.LongTensor([1,2,3,4,7,8,9,13,14,19]).to(X.device))
-#         bias = bias.flatten(start_dim=-2).index_select(0,torch.LongTensor([1,2,3,4,7,8,9,13,14,19]).to(X.device))
-#
-#         x = mul * D_A_B_neighbors + bias
-#         if mask_atoms != None:
-#             mask_atoms_attend = self.gather_nodes(mask_atoms, E_idx)
-#             mask_attend_new = (mask_atoms_attend[:, :, :, None, :] * mask_atoms_attend[:, :, :, :, None])
-#             x = x * mask_attend_new
-#         x = x.unsqueeze(-1).expand(-1, -1, -1, self.K)
-#         mean = self.means.weight.float().view(-1)
-#         std = self.stds.weight.float().view(-1).abs() + 1e-2
-#         gbf = gaussian(x.float(), mean, std).type_as(self.means.weight).view(n_complex, n_residue, -1)
-#         return gbf
-#
-
-# def from_3_points(p_x_axis, origin, p_xy_plane, eps=1e-10):
-#     """
-#         Adpated from torchfold
-#         Implements algorithm 21. Constructs transformations from sets of 3
-#         points using the Gram-Schmidt algorithm.
-#         Args:
-#             x_axis: [*, 3] coordinates
-#             origin: [*, 3] coordinates used as frame origins
-#             p_xy_plane: [*, 3] coordinates
-#             eps: Small epsilon value
-#         Returns:
-#             A transformation object of shape [*]
-#     """
-#     p_x_axis = torch.unbind(p_x_axis, dim=-1)
-#     origin = torch.unbind(origin, dim=-1)
-#     p_xy_plane = torch.unbind(p_xy_plane, dim=-1)
-#
-#     e0 = [c1 - c2 for c1, c2 in zip(p_x_axis, origin)]
-#     e1 = [c1 - c2 for c1, c2 in zip(p_xy_plane, origin)]
-#
-#     denom = torch.sqrt(sum((c * c for c in e0)) + eps)
-#     e0 = [c / denom for c in e0]
-#     dot = sum((c1 * c2 for c1, c2 in zip(e0, e1)))
-#     e1 = [c2 - c1 * dot for c1, c2 in zip(e0, e1)]
-#     denom = torch.sqrt(sum((c * c for c in e1)) + eps)
-#     e1 = [c / denom for c in e1]
-#     e2 = [
-#         e0[1] * e1[2] - e0[2] * e1[1],
-#         e0[2] * e1[0] - e0[0] * e1[2],
-#         e0[0] * e1[1] - e0[1] * e1[0],
-#     ]
-#
-#     rots = torch.stack([c for tup in zip(e0, e1, e2) for c in tup], dim=-1)
-#     rots = rots.reshape(rots.shape[:-1] + (3, 3))
-#
-#     return rots
 
 class NonLinear(nn.Module):
     def __init__(self, input, output_size, hidden=None):
@@ -168,7 +86,7 @@ class NonLinear(nn.Module):
         if hidden is None:
             hidden = input
         self.layer1 = nn.Linear(input, hidden)
-        self.act = nn.GELU()
+        self.act = nn.SELU()
         self.layer2 = nn.Linear(hidden, output_size)
 
     def forward(self, x):
@@ -187,13 +105,13 @@ class PerResidueEncoder(nn.Module):
         # self.aatype_embed = nn.Embedding(max_aa_types, feat_dim, padding_idx=21)
         # Phi, Psi, Chi1-4
         self.dihed_embed = AngularEncoding()
-        # infeat_dim = feat_dim + 16 * 10 + self.dihed_embed.get_out_dim(6)
-        infeat_dim = feat_dim + 8 * 65 + self.dihed_embed.get_out_dim(6)
+        infeat_dim = feat_dim + 8 * 11 + self.dihed_embed.get_out_dim(6)
+        # infeat_dim = feat_dim + 8 * 65 + self.dihed_embed.get_out_dim(6)
 
         self.mlp = nn.Sequential(
-            nn.Linear(infeat_dim, feat_dim * 2), nn.GELU(),
-            nn.Linear(feat_dim * 2, feat_dim), nn.GELU(),
-            nn.Linear(feat_dim, feat_dim), nn.GELU(),
+            nn.Linear(infeat_dim, feat_dim * 2), nn.SELU(),
+            nn.Linear(feat_dim * 2, feat_dim), nn.SELU(),
+            nn.Linear(feat_dim, feat_dim), nn.SELU(),
             nn.Linear(feat_dim, feat_dim)
         )
 
@@ -231,6 +149,7 @@ class PerResidueEncoder(nn.Module):
         O = X[:, :, 3, :]
         Cb = X[:, :, 4, :]
         RBF_all = []
+        RBF_all2 = []
         RBF_all.append(self._get_rbf_residue(Ca, N))  # Ca-N
         RBF_all.append(self._get_rbf_residue(Ca, C))  # Ca-C
         RBF_all.append(self._get_rbf_residue(Ca, O))  # Ca-O
@@ -246,7 +165,11 @@ class PerResidueEncoder(nn.Module):
         for i in range(4, 15-1, 1):
             for j in range(i+1, 15, 1):
                 mask_ij = mask_atom[:, :, i] * mask_atom[:, :, j]
-                RBF_all.append(self._get_rbf_residue(X[:, :, i, :], X[:, :, j, :]) * mask_ij[:, :, None])  # Cb-atoms
+                # RBF_all2.append(self._get_rbf_residue(X[:, :, i, :], X[:, :, j, :]) * mask_ij[:, :, None])  # Cb-atoms
+                RBF_all2.append((torch.sqrt(torch.sum((X[:, :, i, :] - X[:, :, j, :]) ** 2, -1) + 1e-6) * mask_ij)[:, :, None])
+        RBF_all2 = torch.cat(tuple(RBF_all2), dim=-1) * mask_residue[:, :, None]
+        RBF_all.append(self._rbf_residue(torch.max(RBF_all2, dim=-1, keepdim=False)[0]))
+
         RBF_all = torch.cat(tuple(RBF_all), dim=-1) * mask_residue[:, :, None]
 
         aa_feat = self.esm_embed(aa_esm2) * mask_residue[:, :, None]

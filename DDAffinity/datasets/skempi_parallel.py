@@ -672,7 +672,6 @@ class SkempiDataset_lmdb(Dataset):
                 ]
                 complex_splits.pop(self.cvfold_index)
                 train_split = sum(complex_splits, start=[])
-
         elif self.PPIformer == True:
             train_split = []
             val_split = []
@@ -800,7 +799,7 @@ class SkempiDataset_lmdb(Dataset):
             tasks.append(
                 delayed(_process_structure)(pdb_wt_path, pdb_mt_path, self.esm2_650M_cache, ligand, receptor, pdbcode)
             )
-            # _process_structure(pdb_wt_path, pdb_mt_path, tokenizer, esm_model, ligand, receptor, pdbcode)
+            # _process_structure(pdb_wt_path, pdb_mt_path, self.esm2_650M_cache, ligand, receptor, pdbcode)
 
         # Split data into chunks
         chunk_size = 512

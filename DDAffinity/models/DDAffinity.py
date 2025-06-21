@@ -120,29 +120,29 @@ class AApair(nn.Module):
         return feat_aapair * mask_attend.unsqueeze(-1)
 
 class ResiduePairEncoder(nn.Module):
-    def __init__(self, edge_features, node_features, top_k1, top_k2, k3, long_range_seq, noise_bb, noise_sd, num_positional_embeddings=16, num_rbf=16):
+    def __init__(self, edge_features, node_features, cfg, num_positional_embeddings=16, num_rbf=16):
         """ Extract protein features """
         super(ResiduePairEncoder, self).__init__()
         self.edge_features = edge_features
         self.node_features = node_features
-        self.top_k1 = top_k1
-        self.top_k2 = top_k2
-        self.k3 = k3
-        # self.top_k4 = top_k4
-        self.long_range_seq = long_range_seq
+        self.top_k1 = cfg.k1
+        self.top_k2 = cfg.k2
+        self.top_k3 = cfg.k3
+
+        self.noise_bb = cfg.noise_bb
+        self.noise_sd = cfg.noise_sd
         self.num_rbf = num_rbf
         self.num_positional_embeddings = num_positional_embeddings
-        self.noise_bb = noise_bb
-        self.noise_sd = noise_sd
 
         self.embeddings = PositionalEncodings(num_positional_embeddings)
-        node_in, edge_in = 6, num_positional_embeddings + num_rbf * 45 + 7 * 2 + 16
+        # node_in, edge_in = 6, num_positional_embeddings + num_rbf * 45 + 7 * 2 + 16
+        node_in, edge_in = 6, num_positional_embeddings + num_rbf * 26 + 7 * 2 + 16
         self.aapair = AApair(K=16, max_aa_types=22)
 
         self.edge_embedding = nn.Linear(edge_in, edge_features, bias=False)
         self.norm_edges = nn.LayerNorm(edge_features, elementwise_affine=False)
 
-        self.dropout = nn.Dropout(0.1)
+        self.dropout = nn.Dropout(cfg.dropout)
 
     def _dist(self, X, mask_residue, residue_idx, cutoff=15.0, eps=1E-6):
         """ Pairwise euclidean distances """
@@ -156,9 +156,9 @@ class ResiduePairEncoder(nn.Module):
 
         # 序列最近邻
         rel_residue = residue_idx[:, :, None] - residue_idx[:, None, :]
-        mask_2D_seq = (torch.abs(rel_residue) <= (self.k3 - 1) / 2) * mask_rball
+        mask_2D_seq = (torch.abs(rel_residue) <= (self.top_k3 - 1) / 2) * mask_rball
         D_sequence = D * mask_2D_seq  # 以距离对齐
-        _, E_idx_seq = torch.topk(D_sequence, self.k3, dim=-1, largest=True)
+        _, E_idx_seq = torch.topk(D_sequence, self.top_k3, dim=-1, largest=True)
         mask_seq = gather_edges(mask_2D_seq.unsqueeze(-1), E_idx_seq)[:, :, :, 0]
 
         # 空间最近邻
@@ -168,7 +168,7 @@ class ResiduePairEncoder(nn.Module):
         mask_spatial = gather_edges(mask_rball.unsqueeze(-1), E_idx_spatial)[:, :, :, 0]
 
         # 序列远 空间近
-        mask_2D_seq = (torch.abs(rel_residue) <= (self.long_range_seq - 1) / 2) * mask_rball  # masked sequence
+        mask_2D_seq = (torch.abs(rel_residue) <= (self.top_k3 - 1) / 2) * mask_rball  # masked sequence
         mask_2D_Lrange = (~mask_2D_seq) * mask_rball  # 序列远
         D_adjust = D + (~mask_2D_Lrange) * D_max
         _, E_idx_Lrange = torch.topk(D_adjust, self.top_k2, dim=-1, largest=False)  # 取最小值
@@ -355,16 +355,15 @@ class ResiduePairEncoder(nn.Module):
 
         # sidechain rbf
         mask_heavyatom = batch["mask_heavyatom"]
+        RBF_all2 = []
         for i in range(5, 15, 1):
             mask_i = mask_heavyatom[:, :, i]
             mask_j = torch.gather(mask_i.unsqueeze(-1).expand(-1, -1, mask_heavyatom.size(1)), 2, E_idx)
-            # Cb-atoms
-            RBF_all.append(self._get_rbf(Cb, X[:, :, i, :], E_idx) * mask_j[:, :, :, None])
-
-        for i in range(5, 15, 1):
-            mask_i = mask_heavyatom[:, :, i]
-            # atoms-Cb
-            RBF_all.append(self._get_rbf(X[:, :, i, :], Cb, E_idx) * mask_i[:, :, None, None])
+            RBF_all2.append(torch.sqrt(torch.sum((Cb - X[:, :, i]) ** 2, -1) + 1e-6)[:, :, None] * mask_i[:, :, None])  # [B, L, L]
+        RBF_all2 = torch.cat(tuple(RBF_all2), dim=-1)
+        D_A_B = torch.max(RBF_all2, dim=-1, keepdim=False)[0]
+        D_A_B_neighbors = torch.gather(D_A_B[:, None, :].expand(-1, D_A_B.size(-1), -1, ), 2, E_idx)  # [B,L,K]
+        RBF_all.append(self._rbf(D_A_B_neighbors))
         RBF_all = torch.cat(tuple(RBF_all), dim=-1)
 
         aapair_feature = self.aapair(aa, E_idx, mask_attend)
@@ -374,7 +373,7 @@ class ResiduePairEncoder(nn.Module):
         E = self.norm_edges(E)
 
         idx_spatial = self.top_k1 + self.top_k2
-        idx_seq = self.k3
+        idx_seq = self.top_k3
 
         E_spatial = E[...,:idx_spatial,:]
         E_idx_spatial = E_idx[...,:idx_spatial]
@@ -390,7 +389,7 @@ class PositionWiseFeedForward(nn.Module):
         super(PositionWiseFeedForward, self).__init__()
         self.W_in = nn.Linear(num_hidden, num_ff, bias=True)
         self.W_out = nn.Linear(num_ff, num_hidden, bias=True)
-        self.act = torch.nn.GELU()
+        self.act = torch.nn.SELU()
     def forward(self, h_V):
         h = self.act(self.W_in(h_V))
         h = self.W_out(h)
@@ -417,7 +416,7 @@ class EncLayer(nn.Module):
         # ReZero is All You Need: Fast Convergence at Large Depth
         self.resweight = nn.Parameter(torch.Tensor([0]))
 
-        self.act = torch.nn.SiLU()
+        self.act = torch.nn.SELU()
         self.dense = PositionWiseFeedForward(num_hidden, num_hidden * 4)
 
     def forward(self, h_V, h_E, E_idx, mask_V=None, mask_attend=None):
@@ -470,8 +469,7 @@ class FusionLayer(nn.Module):
         self.num_hidden = num_hidden
         self.num_in = num_in
         self.scale = scale
-        self.dropout1 = nn.Dropout(dropout)
-        self.dropout2 = nn.Dropout(dropout)
+        self.dropout = nn.Dropout(dropout)
 
         self.layer_norms = nn.ModuleList([nn.LayerNorm(num_hidden, elementwise_affine=False) for i in range(3)])
 
@@ -480,7 +478,7 @@ class FusionLayer(nn.Module):
         self.W1 = nn.Linear(num_hidden + num_in, num_hidden, bias=True)
         self.W2 = nn.Linear(num_hidden, num_hidden, bias=True)
         self.W3 = nn.Linear(num_hidden, num_hidden, bias=True)
-        self.act = torch.nn.SiLU()
+        self.act = torch.nn.SELU()
         self.dense = PositionWiseFeedForward(num_hidden, num_hidden * 4)
 
     def forward(self, h_S, h_V, h_E, E_idx, mask_attend, mask_V=None):
@@ -496,7 +494,7 @@ class FusionLayer(nn.Module):
         h_EV = torch.cat([h_S_expand, h_V_expand, h_EXV_out], -1)  # h_i || h_i(enc) ||  h_j(enc) || h_j || h_edge
         h_message = self.W3(self.act(self.W2(self.act(self.W1(h_EV)))))
         dh = torch.sum(h_message, -2) / self.scale
-        h_V = residual + self.dropout1(dh)
+        h_V = residual + self.dropout(dh)
         h_V = self.maybe_layer_norm(2, h_V, before=False, after=True)
         if mask_V is not None:
             mask_V = mask_V.unsqueeze(-1)
@@ -536,15 +534,9 @@ class DDAffinity_NET(nn.Module):
         self.node_features = cfg.encoder.node_feat_dim
         self.edge_features = cfg.encoder.edge_feat_dim
         self.num_encoder_layers = cfg.encoder.num_layers
-        self.dropout = cfg.dropout
         hidden_dim = cfg.hidden_dim
-        self.num_rbf = 16
-        self.top_k1 = cfg.k1
-        self.top_k2 = cfg.k2
-        self.k3 = cfg.k3
-        self.long_range_seq = cfg.long_range_seq
 
-        self.pair_encoder = ResiduePairEncoder(self.edge_features, self.node_features, top_k1=cfg.k1, top_k2= cfg.k2, k3 = cfg.k3, long_range_seq=cfg.long_range_seq, noise_bb=cfg.noise_bb, noise_sd=cfg.noise_sd)
+        self.pair_encoder = ResiduePairEncoder(self.edge_features, self.node_features, cfg=cfg)
         self.W_e = nn.Linear(self.edge_features, hidden_dim, bias=True)
         self.W_es = nn.Linear(self.edge_features, hidden_dim, bias=True)
 
@@ -557,7 +549,8 @@ class DDAffinity_NET(nn.Module):
         ])
 
         self.AA_embed = nn.ModuleList([
-            AAEmbedding(feat_dim=cfg.encoder.node_feat_dim, infeat_dim=123)
+            # AAEmbedding(feat_dim=cfg.encoder.node_feat_dim, infeat_dim=123)
+            AAEmbedding(feat_dim=cfg.encoder.node_feat_dim, infeat_dim=101)
             for _ in range(2)
         ])
 
@@ -581,40 +574,47 @@ class DDAffinity_NET(nn.Module):
 
         # Encoder layers
         self.encoder_layers_spatial = nn.ModuleList([
-            EncLayer(hidden_dim, hidden_dim*2, dropout=cfg.dropout)
-            for _ in range(self.num_encoder_layers)
+            EncLayer(hidden_dim, hidden_dim*2, dropout=cfg.dropout, scale=math.sqrt(cfg.k1 + cfg.k2) )
+            for _ in range(4)
         ])
         self.encoder_layers_sequential = nn.ModuleList([
-            EncLayer(hidden_dim, hidden_dim * 2, dropout=cfg.dropout)
-            for _ in range(self.num_encoder_layers)
+            EncLayer(hidden_dim, hidden_dim * 2, dropout=cfg.dropout, scale=math.sqrt(cfg.k3))
+            for _ in range(4)
         ])
 
         self.single_fusion = nn.Linear(hidden_dim*2, hidden_dim)
 
-        self.fusion_layer = FusionLayer(hidden_dim * 4, hidden_dim, dropout=cfg.dropout)
+        # self.fusion_layer = FusionLayer(hidden_dim * 4, hidden_dim, dropout=cfg.dropout)
+        self.fusion_layer = nn.ModuleList([
+            FusionLayer(hidden_dim * 4, hidden_dim, dropout=cfg.dropout, scale=math.sqrt(cfg.k1 + cfg.k2 + cfg.k3))
+            for _ in range(1)
+        ])
+
         self.enc_centrality = nn.Parameter(torch.Tensor([0]))
 
         # Pred
         self.ddg_readout = nn.Sequential(
-            nn.Linear(hidden_dim, hidden_dim), nn.GELU(),
-            nn.Linear(hidden_dim, hidden_dim), nn.GELU(),
+            # nn.Linear(hidden_dim, hidden_dim), nn.GELU(),
+            # nn.Linear(hidden_dim, hidden_dim), nn.GELU(),
+            nn.Linear(hidden_dim, hidden_dim), nn.SELU(),
+            nn.Linear(hidden_dim, hidden_dim), nn.SELU(),
             nn.Linear(hidden_dim, 1)
         )
 
         # foldx_ddg
         self.foldx_ddg = nn.Sequential(
-            nn.Linear(15, hidden_dim), nn.GELU(),
+            nn.Linear(15, hidden_dim), nn.SELU(),
             nn.Dropout(cfg.dropout),
-            nn.Linear(hidden_dim, hidden_dim), nn.GELU(),
+            nn.Linear(hidden_dim, hidden_dim), nn.SELU(),
             nn.Dropout(cfg.dropout),
             nn.Linear(hidden_dim, 1)
         )
 
         # cath classifier
         self.cath_classifier = nn.Sequential(
-                nn.Linear(hidden_dim, hidden_dim), nn.GELU(),
+                nn.Linear(hidden_dim, hidden_dim), nn.SELU(),
                 nn.Dropout(cfg.dropout),
-                nn.Linear(hidden_dim, hidden_dim), nn.GELU(),
+                nn.Linear(hidden_dim, hidden_dim), nn.SELU(),
                 nn.Dropout(cfg.dropout),
                 nn.Linear(hidden_dim, cfg.num_labels)
             )
@@ -650,12 +650,47 @@ class DDAffinity_NET(nn.Module):
         )
         return chi_new
 
+    def chi_mask(self, chi, batch, mask_single=1, mask_multi=4, mask_other=0):
+        # mask mutation site and interface
+        zero_chi = torch.zeros_like(chi)
+        # mask_flag = batch['mut_flag'].float() + batch['interface_flag'].float()
+        mask_flag = batch['mut_flag'].float()[:, :, None]
+        if mask_other == 0:
+            chi_other = chi * (1 - mask_flag)
+        elif mask_other == 4:
+            chi_other = zero_chi
+        else:
+            chi_other = torch.cat([zero_chi[:, :, -mask_other:],
+                                   (chi * (1 - mask_flag))[:, :, :(4 - mask_other)]], dim=-1)
+
+        if mask_single == 0:
+            chi_single = chi * mask_flag
+        elif mask_single == 4:
+            chi_single = zero_chi
+        else:
+            chi_single = torch.cat([zero_chi[:, :, -mask_single:],
+                                    (chi * mask_flag)[:, :, :(4 - mask_single)]], dim=-1)
+
+        if mask_multi == 0:
+            chi_multi = chi * mask_flag
+        elif mask_multi == 4:
+            chi_multi = zero_chi
+        else:
+            chi_multi = torch.cat([zero_chi[:, :, -mask_multi:],
+                                   (chi * mask_flag)[:, :, :(4 - mask_multi)]], dim=-1)
+
+        chi_select = chi_other + chi_single * (batch["num_muts"] == 1)[:, None, None] + chi_multi * (batch["num_muts"] > 1)[:, None, None]
+        return chi_select
+
     def dihedral_encode(self, batch, code_idx):
         mask_residue = batch['mask']
 
         chi = self._random_flip_chi(batch['chi'], batch['chi_alt'])
-        chi_select = torch.cat([(chi * (1 - batch['mut_flag'].float())[:, :, None])[:,:,1:],
-                                (chi * batch['mut_flag'].float()[:, :, None])[:,:,:1]], dim=-1)
+        # chi_select = chi * (1 - batch['mut_flag'].float())[:, :, None]
+        if self.training:
+            chi_select = self.chi_mask(chi, batch, mask_single=3, mask_multi=3, mask_other=1)
+        else:
+            chi_select = self.chi_mask(chi, batch, mask_single=1, mask_multi=4, mask_other=2)
 
         x = self.single_encoders[code_idx](
             aa=batch['aa'],
@@ -700,13 +735,14 @@ class DDAffinity_NET(nn.Module):
         h_E = torch.cat([h_E_spatial, h_E_seq], dim=-2)
         mask_attend = torch.cat([mask_spatial, mask_seq], dim=-1)
 
-        h_EXV_out = self.fusion_layer(h_S, h_V, h_E, E_idx, mask_attend, mask)
+        for i, layer in enumerate(self.fusion_layer):
+            h_V = layer(h_S, h_V, h_E, E_idx, mask_attend, mask)
 
         # # 中心性
         h_centrality = self.gather_centrality(batch["centrality"], E_idx, mask)
-        h_EXV_out = h_EXV_out * h_centrality
+        h_V = h_V * h_centrality
 
-        return h_EXV_out
+        return h_V
 
     def forward(self, batch):
         """
@@ -763,8 +799,9 @@ class DDAffinity_NET(nn.Module):
 
         H_mt, H_wt = h_mt.max(dim=1)[0], h_wt.max(dim=1)[0]
 
+        ddg_pred = self.ddg_readout(H_mt - H_wt)
         ddg_pred_foldx = self.foldx_ddg(batch_mt['inter_energy'] - batch_wt['inter_energy'])
-        ddg_pred = 0.5 * self.ddg_readout(H_mt - H_wt) + 0.5 * ddg_pred_foldx
+        ddg_pred = 0.5 * ddg_pred + 0.5 * ddg_pred_foldx
 
         out_dict = {
             'ddG_pred': ddg_pred,
