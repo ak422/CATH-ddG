@@ -574,7 +574,7 @@ class DDAffinity_NET(nn.Module):
 
         # Encoder layers
         self.encoder_layers_spatial = nn.ModuleList([
-            EncLayer(hidden_dim, hidden_dim*2, dropout=cfg.dropout, scale=math.sqrt(cfg.k1 + cfg.k2) )
+            EncLayer(hidden_dim, hidden_dim*2, dropout=cfg.dropout, scale=math.sqrt(cfg.k1 + cfg.k2 - 1) )
             for _ in range(4)
         ])
         self.encoder_layers_sequential = nn.ModuleList([
@@ -586,7 +586,7 @@ class DDAffinity_NET(nn.Module):
 
         # self.fusion_layer = FusionLayer(hidden_dim * 4, hidden_dim, dropout=cfg.dropout)
         self.fusion_layer = nn.ModuleList([
-            FusionLayer(hidden_dim * 4, hidden_dim, dropout=cfg.dropout, scale=math.sqrt(cfg.k1 + cfg.k2 + cfg.k3))
+            FusionLayer(hidden_dim * 4, hidden_dim, dropout=cfg.dropout, scale=math.sqrt(cfg.k1 + cfg.k2 + cfg.k3 - 1))
             for _ in range(1)
         ])
 
