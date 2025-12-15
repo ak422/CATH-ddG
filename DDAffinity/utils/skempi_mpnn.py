@@ -130,14 +130,11 @@ def perprotein_correlations(df, return_details=False, complex_threshold=8):
 def percomplex_correlations(df, return_details=False):
     corr_table = []
     for cplx in np.sort(df['complex_PPI'].unique()):
-    # for cplx in np.sort(df['protein_group'].unique()):
         df_cplx = df.query(f'complex_PPI == "{cplx}"')
-        # df_cplx = df.query(f'protein_group == "{cplx}"')
         if len(df_cplx) < 10:
             continue
         corr_table.append({
             'complex_PPI': cplx,
-            # 'protein_group': cplx,
             'pearson': df_cplx[['ddG', 'ddG_pred']].corr('pearson').iloc[0,1],
             'spearman': df_cplx[['ddG', 'ddG_pred']].corr('spearman').iloc[0,1],
         })
@@ -146,8 +143,6 @@ def percomplex_correlations(df, return_details=False):
     out = {
         'percomplex_pearson': average['pearson'],
         'percomplex_spearman': average['spearman'],
-        # 'perprotein_pearson': average['pearson'],
-        # 'perprotein_spearman': average['spearman'],
     }
     if return_details:
         return out, corr_table
@@ -181,10 +176,14 @@ def permutation_correlations(df, return_details=False):
     return pd_out
 
 def overall_auroc(df):
-    score = roc_auc_score(
-        (df['ddG'] > 0).to_numpy(),
-        df['ddG_pred'].to_numpy()
-    )
+    try:
+        # Only one class present
+        score = roc_auc_score(
+            (df['ddG'] > 0).to_numpy(),
+            df['ddG_pred'].to_numpy()
+        )
+    except ValueError:
+        score = np.nan
     return {
         'auroc': score,
     }
@@ -196,15 +195,15 @@ def overall_rmse_mae(df):
     pred_corrected = reg.predict(pred)
     rmse = np.sqrt( ((true - pred_corrected) ** 2).mean() )
     mae = np.abs(true - pred_corrected).mean()
-    pred_neg = df['ddG_pred'] < 0
-    real_neg = df['ddG'] < 0
-    precision = precision_score(real_neg, pred_neg, zero_division=0),
-    recall = recall_score(real_neg, pred_neg, zero_division=0),
+    # pred_neg = df['ddG_pred'] < 0
+    # real_neg = df['ddG'] < 0
+    # precision = precision_score(real_neg, pred_neg, zero_division=0),
+    # recall = recall_score(real_neg, pred_neg, zero_division=0),
     return {
         'rmse': rmse,
         'mae': mae,
-        'precision': precision[0],
-        'recall': recall[0],
+        # 'precision': precision[0],
+        # 'recall': recall[0],
     }
 
 def analyze_all_results(df):

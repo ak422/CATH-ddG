@@ -270,13 +270,20 @@ def get_logger(name=None):
 def func1(pdbcode, path="optimized", subset='skempi_v2'):
     prefix_dir = f'../../data/SKEMPI2/{subset}_cache'
     Interaction_mt = f"{prefix_dir}/mutant_ddg/Interaction_{pdbcode}.txt"
+    Interaction_op = f"{prefix_dir}/optimize_ddg/Interaction_{pdbcode}.txt"
     Interaction_wt = f"{prefix_dir}/wildtype_ddg/Interaction_{pdbcode}.txt"
+
     try:
         with open(Interaction_mt,"r") as file:
             lines = file.readlines()
             for line in lines:
                 if pdbcode in line:
                     Inter_mt = float(line.split()[5])
+        with open(Interaction_op,"r") as file:
+            lines = file.readlines()
+            for line in lines:
+                if pdbcode in line:
+                    Inter_op = float(line.split()[5])
         with open(Interaction_wt,"r") as file:
             lines = file.readlines()
             for line in lines:
@@ -418,15 +425,15 @@ if __name__ == '__main__':
     success_count = sum(r[1] is None for r in result)
     print(f"{success_count} PDBs of mutant Optimize by FoldX")
 
-    # # AnalyseComplex for optimized
-    # optimized_fpaths = [p for p in args.output_optimized_dir.glob('*.pdb') if not p.name.startswith('.')]
-    # _run_foldx_analysecomplex_op = partial(run_foldx_analysecomplex_op, pdb_dir=args.output_optimized_dir,
-    #                                        partner=complex_partner, output_dir=args.output_analysecomplex_op_dir)
-    # with mp.Pool(min(MAX_CPU_cores, mp.cpu_count())) as pool:
-    #     result = pool.map(_run_foldx_analysecomplex_op,
-    #                       tqdm(optimized_fpaths, desc=f'\033[0;37;42m AnalyseComplex for optimized\033[0m'))
-    # success_count = sum(r[1] is None for r in result)
-    # print(f"{success_count} PDBs of optimized AnalyseComplex by FoldX")
+    # AnalyseComplex for optimized
+    optimized_fpaths = [p for p in args.output_optimized_dir.glob('*.pdb') if not p.name.startswith('.')]
+    _run_foldx_analysecomplex_op = partial(run_foldx_analysecomplex_op, pdb_dir=args.output_optimized_dir,
+                                           partner=complex_partner, output_dir=args.output_analysecomplex_op_dir)
+    with mp.Pool(min(MAX_CPU_cores, mp.cpu_count())) as pool:
+        result = pool.map(_run_foldx_analysecomplex_op,
+                          tqdm(optimized_fpaths, desc=f'\033[0;37;42m AnalyseComplex for optimized\033[0m'))
+    success_count = sum(r[1] is None for r in result)
+    print(f"{success_count} PDBs of optimized AnalyseComplex by FoldX")
 
     # update FoldX ddg
     df = pd.read_csv(args.output_csv_path, sep=',')

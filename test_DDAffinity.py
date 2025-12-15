@@ -86,26 +86,26 @@ if __name__ == '__main__':
         model_factory=DDAffinity_NET,
         config=config_model,
         early_stoppingdir=config_model.early_stoppingdir,
-        num_cvfolds=config_model.train.num_cvfolds
+        num_cvfolds=config.train.num_cvfolds
     ).to(args.device)
 
     dataset_mgr = SkempiDatasetManager(
         # config_model,
         config,
-        split_seed=config_model.train.seed,
-        num_cvfolds=config_model.train.num_cvfolds,
+        split_seed=config.train.seed,
+        num_cvfolds=config.train.num_cvfolds,
         num_workers=args.num_workers,
     )
 
     results = []
-    for fold in range(config_model.train.num_cvfolds):
+    for fold in range(config.train.num_cvfolds):
         results_fold = []
         for i in range(len(ckpt)):
             cv_mgr.load_state_dict(ckpt[i]['model'], )
             model, _, _, _ = cv_mgr.get(fold)
             model.eval()
             with torch.no_grad():
-                for j, batch in enumerate(tqdm(dataset_mgr.get_val_loader(fold), desc=f'\033[0;37;42m Fold {fold+1}/{config_model.train.num_cvfolds} Model {i+1}/{len(ckpt)} \033[0m', dynamic_ncols=True, bar_format="{l_bar}%s{bar}%s{r_bar}" % (Fore.WHITE, Fore.RESET))):
+                for j, batch in enumerate(tqdm(dataset_mgr.get_val_loader(fold), desc=f'\033[0;37;42m Fold {fold+1}/{config.train.num_cvfolds} Model {i+1}/{len(ckpt)} \033[0m', dynamic_ncols=True, bar_format="{l_bar}%s{bar}%s{r_bar}" % (Fore.WHITE, Fore.RESET))):
                     # Prepare data
                     batch = recursive_to(batch, args.device)
 
